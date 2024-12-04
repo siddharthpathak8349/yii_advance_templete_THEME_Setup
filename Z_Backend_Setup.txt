@@ -1,13 +1,38 @@
-Step - 1       for  run directly  project  run this  command  for BACKEND :-   php -S localhost:8080 -t backend/web
+Step - 1                                         for  run directly  project  run this  command  for BACKEND :-   php -S localhost:8080 -t backend/web
 
-Step - 2        php init
+Step - 2                                         php init  (to setup Yii2 Advance Templete Project)
+
+Step - 3 (backend->asset)                        Copy NovaAppAsset.php   to you Advance Templete
+
+Step - 4 (backend->config->main.php)             copy this  components code
+
+                                                'components' => [
+
+                                                        'view' => [
+                                                            'theme' => [
+                                                                'basePath' => '@backend/themes/nova',
+                                                                'baseUrl' => '@backend/themes/nova',
+                                                                'pathMap' => ['@backend/views' => '@backend/themes/nova/views'],
+                                                            ],
+                                                        ],
+
+Step - 5 (backend->controller->SiteController)   Copy SiteController.php code  to you project
+
+Step - 6 Create  "themes" folder directly inside  backend  (put all "nova" folder in it)
+
+Step - 7 Copy backend->themes->views->layouts->main.php   main.php ka code copy karo GITHUB se  aur  paste kar do apne project ke  same main.php me
+
+Step - 8 Apne backend->views->layouts->main.php me  bhi nova ke main.php ka code paste kar do 
+
+Step - 9 Pura " WIDGETS " folder banao  small letter me aur uske ander ka header footer ka code copy ar lo github se 
 
 
 
-Step - 3 Connect DB  form common  
 
-Step - 4  username :- admin
-          password :- 1234567890
+userame ;- admin
+pasward :- 1234567890
+
+
 
                                     
 

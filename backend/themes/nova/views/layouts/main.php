@@ -1,104 +1,93 @@
 <?php
-/* @var $this \yii\web\View */
-/* @var $content string */
 
-use yii\bootstrap5\Html;
-use backend\assets\NovaAsset;
+/** @var \yii\web\View $this */
+/** @var string $content */
+
+// use backend\assets\AppAsset;
+// use backend\assets\NovaAsset;
+use backend\assets\NovaAppAsset;
 use backend\widgets\Breadcrumbs;
-NovaAsset::register($this);
-//echo "<pre>";
-//print_r($this->assetBundles['backend\assets\NovaAsset']->baseUrl);exit;
+use backend\widgets\Header;
+use backend\widgets\Sidebar;
+use common\widgets\Alert;
+// use yii\bootstrap4\Breadcrumbs;
+
+// AppAsset::register($this);
+NovaAppAsset::register($this);
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="<?= Yii::$app->charset ?>">
-        <meta name='viewport' content='width=device-width, initial-scale=1.0, user-scalable=0'>
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="Description" content="Project managment system">
-        <meta name="Author" content="Triline infotech Private Limited">
-        <meta name="Keywords" content="project,bug,meeting,action ponts,notes,calender" />
-        <title><?= !empty(\Yii::$app->params['projectTitle']) ? \Yii::$app->params['projectTitle'] . ' |' : '' ?>  <?= Html::encode($this->title) ?> |  <?= \Yii::$app->name ?> </title>
-        <?php $this->registerCsrfMetaTags() ?>
-        <link rel="icon" href="/images/svgs/vector.svg" type="image/x-icon" />
-        <?php $this->head() ?>
-    </head>
+<html lang="<?= Yii::$app->language ?>" class="h-100" style="--bs-success-text:#198754; ">
 
-    <!-- <body class="ltr main-body app light-theme horizontal horizontal-hover" onload="countdowntimes()"> -->
-    <body class="ltr main-body app light-theme horizontal horizontal-hover">
+<head>
+    <meta charset="<?= Yii::$app->charset ?>">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <?php $this->registerCsrfMetaTags() ?>
+    <title><?= $this->title ?></title>
+    <?php $this->head() ?>
+    <style>
+        .invalid-feedback {
+            color: #dc3545;
+        }
 
-        <!-- Loader -->
-        <div id="global-loader">
-            <img src="/images/loader.svg" class="loader-img" alt="Loader">
-        </div>
-        <!-- /Loader -->
+        .body {
+            background-color: #ebeef4 !important;
+        }
+    </style>
+</head>
 
-        <!-- Page -->
-        <div class="page">
+<body>
+    <?php $this->beginBody() ?>
+    <div id="app" class="app">
 
-            <div>
-                <!-- main-header -->
+        <!-- /main-header -->
+        <?= Header::widget() ?>
+        <!-- /main-header -->
 
-                <?= \backend\widgets\Header::widget() ?>
-
-                <!-- /main-header -->
-
-                <!-- main-sidebar -->
-                <?= \backend\widgets\MainSidebar::widget() ?>
-
-
-                <!-- main-sidebar -->
-            </div>
-
-            <!-- main-content -->
-            <div class="main-content app-content mt-3">
-
-                <!-- container -->
-                <div class="main-container container-fluid">
-
-
-
-
-
-                    <?= $content ?>
-                    <!--Content End-->
-
-
-
+        <!-- main-sidebar -->
+        <?= Sidebar::widget() ?>
+        <!-- main-sidebar -->
+        <!-- START #content -->
+        <div id="content" class="app-content">
+            <!-- <div class="breadcrumb-header justify-content-between">
+                <div class="left-content">
+                    <span class="main-content-title mg-b-0 mg-b-lg-1">DASHBOARD</span>
                 </div>
-                <!-- /Container -->
+                <div class="justify-content-center mt-2">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item tx-15"><a href="javascript:void(0);">Dashboard</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Sales</li>
+                    </ol>
+                </div>
+            </div> -->
+            <div class="breadcrumb-header justify-content-between">
+
+                <div class="justify-content-center mt-1" id="breadcrumbs">
+                    <ol class="breadcrumb">
+                        <?= Breadcrumbs::widget() ?>
+
+                    </ol>
+                </div>
             </div>
-            <!-- /main-content -->
 
-            <!-- Sidebar-right-->
-            <?= \backend\widgets\ProjectNotification::widget() ?>
-
-
-            <!--/Sidebar-right-->
-
-
-
-            <?= \backend\widgets\Modals::widget() ?>
-
-
-
-            <!-- Footer opened -->
-            <?= \backend\widgets\Footer::widget() ?>
-
-            <!-- Footer closed -->
+            <?= $content ?>
         </div>
-        <!-- End Page -->
+        <!-- END #content -->
 
-        <!-- Back-to-top -->
-        <a href="#top" id="back-to-top"><i class="las la-arrow-up"></i></a>
-
-        <?= \backend\widgets\Alert::widget() ?>
-
-
-        <?php $this->endBody() ?>
-    </body>
+    </div>
+    <!-- END #app -->
+    <?php $this->endBody() ?>
+    <style>
+        #breadcrumbs {
+            /* background-color: red; */
+            margin-left: 84% !important;
+            position: relative;
+            top: 80px;
+            /* z-index: 9999;  */
+        }
+    </style>
+</body>
 
 </html>
-<?php
-$this->endPage();
+<?php $this->endPage();

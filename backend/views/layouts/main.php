@@ -3,79 +3,91 @@
 /** @var \yii\web\View $this */
 /** @var string $content */
 
-use backend\assets\AppAsset;
+// use backend\assets\AppAsset;
+// use backend\assets\NovaAsset;
+use backend\assets\NovaAppAsset;
+use backend\widgets\Breadcrumbs;
+use backend\widgets\Header;
+use backend\widgets\Sidebar;
 use common\widgets\Alert;
-use yii\bootstrap5\Breadcrumbs;
-use yii\bootstrap5\Html;
-use yii\bootstrap5\Nav;
-use yii\bootstrap5\NavBar;
+// use yii\bootstrap4\Breadcrumbs;
 
-AppAsset::register($this);
+// AppAsset::register($this);
+NovaAppAsset::register($this);
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
-<html lang="<?= Yii::$app->language ?>" class="h-100">
+<html lang="<?= Yii::$app->language ?>" class="h-100" style="--bs-success-text:#198754; ">
+
 <head>
     <meta charset="<?= Yii::$app->charset ?>">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <?php $this->registerCsrfMetaTags() ?>
-    <title><?= Html::encode($this->title) ?></title>
+    <title><?= $this->title ?></title>
     <?php $this->head() ?>
+    <style>
+        .invalid-feedback {
+            color: #dc3545;
+        }
+
+        .body {
+            background-color: #ebeef4 !important;
+        }
+    </style>
 </head>
-<body class="d-flex flex-column h-100">
-<?php $this->beginBody() ?>
 
-<header>
-    <?php
-    NavBar::begin([
-        'brandLabel' => Yii::$app->name,
-        'brandUrl' => Yii::$app->homeUrl,
-        'options' => [
-            'class' => 'navbar navbar-expand-md navbar-dark bg-dark fixed-top',
-        ],
-    ]);
-    $menuItems = [
-        ['label' => 'Home', 'url' => ['/site/index']],
-    ];
-    if (Yii::$app->user->isGuest) {
-        $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
-    }     
-    echo Nav::widget([
-        'options' => ['class' => 'navbar-nav me-auto mb-2 mb-md-0'],
-        'items' => $menuItems,
-    ]);
-    if (Yii::$app->user->isGuest) {
-        echo Html::tag('div',Html::a('Login',['/site/login'],['class' => ['btn btn-link login text-decoration-none']]),['class' => ['d-flex']]);
-    } else {
-        echo Html::beginForm(['/site/logout'], 'post', ['class' => 'd-flex'])
-            . Html::submitButton(
-                'Logout (' . Yii::$app->user->identity->username . ')',
-                ['class' => 'btn btn-link logout text-decoration-none']
-            )
-            . Html::endForm();
-    }
-    NavBar::end();
-    ?>
-</header>
+<body>
+    <?php $this->beginBody() ?>
+    <div id="app" class="app">
 
-<main role="main" class="flex-shrink-0">
-    <div class="container">
-        <?= Breadcrumbs::widget([
-            'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
-        ]) ?>
-        <?= Alert::widget() ?>
-        <?= $content ?>
+        <!-- /main-header -->
+        <?= Header::widget() ?>
+        <!-- /main-header -->
+
+        <!-- main-sidebar -->
+        <?= Sidebar::widget() ?>
+        <!-- main-sidebar -->
+        <!-- START #content -->
+        <div id="content" class="app-content">
+            <!-- <div class="breadcrumb-header justify-content-between">
+                <div class="left-content">
+                    <span class="main-content-title mg-b-0 mg-b-lg-1">DASHBOARD</span>
+                </div>
+                <div class="justify-content-center mt-2">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item tx-15"><a href="javascript:void(0);">Dashboard</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Sales</li>
+                    </ol>
+                </div>
+            </div> -->
+            <div class="breadcrumb-header justify-content-between">
+
+                <div class="justify-content-center mt-1" id="breadcrumbs">
+                    <ol class="breadcrumb">
+                        <?= Breadcrumbs::widget() ?>
+
+                    </ol>
+                </div>
+            </div>
+
+            <?= $content ?>
+        </div>
+        <!-- END #content -->
+
     </div>
-</main>
-
-<footer class="footer mt-auto py-3 text-muted">
-    <div class="container">
-        <p class="float-start">&copy; <?= Html::encode(Yii::$app->name) ?> <?= date('Y') ?></p>
-        <p class="float-end"><?= Yii::powered() ?></p>
-    </div>
-</footer>
-
-<?php $this->endBody() ?>
+    <!-- END #app -->
+    <?php $this->endBody() ?>
+    <style>
+        #breadcrumbs {
+            /* background-color: red; */
+            margin-left: 84% !important;
+            position: relative;
+            top: 80px;
+            /* z-index: 9999;  */
+        }
+    </style>
 </body>
+
 </html>
 <?php $this->endPage();

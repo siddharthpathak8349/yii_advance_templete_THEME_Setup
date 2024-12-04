@@ -14,9 +14,6 @@ use yii\web\Response;
  */
 class SiteController extends Controller
 {
-    /**
-     * {@inheritdoc}
-     */
     public function behaviors()
     {
         return [
@@ -28,7 +25,7 @@ class SiteController extends Controller
                         'allow' => true,
                     ],
                     [
-                        'actions' => ['logout', 'index'],
+                        'actions' => ['logout', 'index', 'reset-database'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -37,7 +34,7 @@ class SiteController extends Controller
             'verbs' => [
                 'class' => VerbFilter::class,
                 'actions' => [
-                    'logout' => ['post'],
+                    'logouts' => ['post'],
                 ],
             ],
         ];
@@ -50,7 +47,11 @@ class SiteController extends Controller
     {
         return [
             'error' => [
-                'class' => \yii\web\ErrorAction::class,
+                'class' => 'yii\web\ErrorAction',
+            ],
+            'captcha' => [
+                'class' => 'yii\captcha\CaptchaAction',
+                'fixedVerifyCode' => YII_ENV_TEST ? 'testme' : null,
             ],
         ];
     }
@@ -68,7 +69,7 @@ class SiteController extends Controller
     /**
      * Login action.
      *
-     * @return string|Response
+     * @return Response|string
      */
     public function actionLogin()
     {
@@ -76,15 +77,12 @@ class SiteController extends Controller
             return $this->goHome();
         }
 
-        $this->layout = 'blank';
-
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
             return $this->goBack();
         }
 
         $model->password = '';
-
         return $this->render('login', [
             'model' => $model,
         ]);
@@ -100,5 +98,16 @@ class SiteController extends Controller
         Yii::$app->user->logout();
 
         return $this->goHome();
+    }
+
+  
+    /**
+     * Displays about page.
+     *
+     * @return string
+     */
+    public function actionAbout()
+    {
+        return $this->render('about');
     }
 }

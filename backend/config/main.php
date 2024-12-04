@@ -16,6 +16,14 @@ return [
         'request' => [
             'csrfParam' => '_csrf-backend',
         ],
+        'view' => [
+            'theme' => [
+                'basePath' => '@backend/themes/nova',
+                'baseUrl' => '@backend/themes/nova',
+                'pathMap' => ['@backend/views' => '@backend/themes/nova/views'],
+            ],
+        ],
+
         'user' => [
             'identityClass' => 'common\models\User',
             'enableAutoLogin' => true,
