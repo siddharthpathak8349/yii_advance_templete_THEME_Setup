@@ -1,0 +1,15 @@
+Step - 1       for  run directly  project  run this  command  for BACKEND :-   php -S localhost:8080 -t backend/web
+
+Step - 2        php init
+
+
+
+Step - 3 Connect DB  form common  
+
+Step - 4  username :- admin
+          password :- 1234567890
+
+                                    
+
+
+            
